@@ -1,0 +1,63 @@
+Enter feature data.
+    Press "Try it out" on the right side of the screen to test out sample data against the API and receive predictions.
+    ---
+    tags:
+      - name: Test Prediction
+    parameters:
+      - name: building
+        in: query
+        type: string
+        required: true
+        description: Name of a Building on the Main NIH Campus that is the location of work for an employee.
+        default: 'Building 10'
+      - name: num_publications
+        in: query
+        type: number
+        required: true
+        description: The total amount of peer-reviewed publications held by an employee.
+        default: 20
+      - name: num_conferences
+        in: query
+        type: number
+        required: true
+        description: The total amount of NIH-sanctioned conferences attended by an employee.
+        default: 30
+      - name: status
+        in: query
+        type: string
+        required: true
+        description: The classification of an employee as either 'Parttime' or 'Fulltime' (40 hours/week).
+        default: 'Fulltime'
+      - name: title
+        in: query
+        type: string
+        required: true
+        description: The official salutation of an employee; may correspond to educational level.
+        default: 'Dr'
+      - name: expertise
+        in: query
+        type: string
+        required: true
+        description: The specific field of expertise held by an employee.
+        default: 'Infectious Diseases'
+      - name: institute
+        in: query
+        type: string
+        required: true
+        description: One of the 27 Institutes of the National Institutes of Health where the employee works.
+        default: 'NHLBI'
+      - name: num_postdocs
+        in: query
+        type: number
+        required: true
+        description: The total amount of Postdoctoral Fellows that an employee oversees.
+        default: 3
+      - name: num_reports
+        in: query
+        type: number
+        required: true
+        description: The total amount of individuals (contractors and Federal workers) overseen by the employee.
+        default: 7
+    responses:
+        200:
+            description: The output values of the request
