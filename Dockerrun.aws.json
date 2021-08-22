@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "jdehorty/model_api:latest",
+    "Name": "jdehorty/summarizer:latest",
     "Update": "true"
   },
   "Ports": [
