@@ -60,6 +60,7 @@ class Prediction(object):
         type: string
         example: "test_images/"
     """
+
     def __init__(self, text, ratio):
         self.text = str(text)
         self.ratio = str(ratio)
@@ -102,7 +103,10 @@ def image_assessment():
         type: string
         required: true
         description: Path to an image file or file directory containing images
-        default: 'test_images/'
+        default: 'C:\\Dropbox\\NiNeCapture\\mm-dd-dddd\\pathToRawFiles'
+    responses:
+        200:
+            description: The output values of the request
     """
     # Return GET output if called directly from the REST API.
     if request.method == 'GET':
@@ -114,7 +118,7 @@ def image_assessment():
             base_model_name=base_model_name,
             weights_aesthetic=weights_aesthetic,
             weights_technical=weights_technical,
-            image_source=image_source)
+            arw_dir=image_source)
         print(prediction_dict)
         return jsonify(prediction_dict)
     elif request.method == 'POST':
@@ -126,26 +130,28 @@ def image_assessment():
             base_model_name=base_model_name,
             weights_aesthetic=weights_aesthetic,
             weights_technical=weights_technical,
-            image_source=image_source)
+            arw_dir=image_source)
         return jsonify(prediction_dict)
 
 
-@app.route('/api/rename', methods=["POST"])
+@app.route('/api/rename', methods=["GET"])
 def rename():
-    base_model_name = request.args.get("base_model_name")
-    weights_aesthetic = request.args.get("weights_aesthetic")
-    weights_technical = request.args.get("weights_technical")
-    image_source = request.args.get("image_source")
-    base_model_name = base_model_name,
-    weights_aesthetic = weights_aesthetic,
-    weights_technical = weights_technical,
-    image_source = image_source
-    prediction_dict = predict.rename_files(
-        base_model_name=base_model_name,
-        weights_aesthetic=weights_aesthetic,
-        weights_technical=weights_technical,
-        image_source=image_source)
-    return jsonify(prediction_dict)
+    if request.method == 'GET':
+        base_model_name = request.args.get("base_model_name")
+        weights_aesthetic = request.args.get("weights_aesthetic")
+        weights_technical = request.args.get("weights_technical")
+        image_source = request.args.get("image_source")
+        base_model_name = base_model_name,
+        weights_aesthetic = weights_aesthetic,
+        weights_technical = weights_technical,
+        image_source = image_source
+        app.logger.info('Preparing to rename files')
+        predict.rename_files(
+            base_model_name=base_model_name,
+            weights_aesthetic=weights_aesthetic,
+            weights_technical=weights_technical,
+            image_source=image_source)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
